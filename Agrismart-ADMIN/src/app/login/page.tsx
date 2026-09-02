@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function LoginPage() {
+function LoginInner() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -97,8 +97,19 @@ export default function LoginPage() {
           <p className="text-center text-xs text-gray-400 mt-6">
             Admin access only. Unauthorized access is prohibited.
           </p>
+          <p className="text-center mt-3">
+            <a href="/" className="text-xs text-gray-400 hover:text-[#2E7D32] hover:underline">← Back to home</a>
+          </p>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-surface"><div className="w-8 h-8 border-4 border-[#2E7D32] border-t-transparent rounded-full animate-spin" /></div>}>
+      <LoginInner />
+    </Suspense>
   );
 }

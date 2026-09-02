@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import AdminLayout from '@/components/AdminLayout';
-import { Users, Bell, Sprout, AlertTriangle } from 'lucide-react';
+import { Users, Bell, Sprout, AlertTriangle, Activity, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, LineChart, Line,
@@ -117,9 +118,16 @@ export default function DashboardPage() {
     <AdminLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="font-display text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-500 text-sm mt-1">Welcome back. Here's what's happening.</p>
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+          <div>
+            <h1 className="font-display text-2xl font-bold text-gray-900">Dashboard</h1>
+            <p className="text-gray-500 text-sm mt-1">Welcome back. Here&apos;s what&apos;s happening — aggregated overview.</p>
+          </div>
+          <Link href="/readings" className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-[#2E7D32]/20 transition-colors shrink-0">
+            <Activity size={16} className="text-[#2E7D32]" />
+            Minute & Raw Readings
+            <ArrowRight size={14} />
+          </Link>
         </div>
 
         {/* Stat cards */}

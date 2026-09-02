@@ -5,12 +5,13 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import {
   LayoutDashboard, Users, Bell, Cloud,
-  BookOpen, Sprout, LogOut, Menu, X
+  BookOpen, Sprout, LogOut, Menu, X, Activity
 } from 'lucide-react';
 import { useState } from 'react';
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/readings', label: 'Readings', icon: Activity },
   { href: '/users', label: 'Users', icon: Users },
   { href: '/alerts', label: 'Alerts', icon: Bell },
   { href: '/weather', label: 'Weather', icon: Cloud },
