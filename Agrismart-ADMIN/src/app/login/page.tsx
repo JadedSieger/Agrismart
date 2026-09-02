@@ -1,16 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useAuth } from '@/lib/auth-context';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function LoginPage() {
+function LoginInner() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const status = searchParams.get('status');
+    if (status === 'pending') {
+      setError('Your account is pending admin approval.');
+    } else if (status === 'rejected') {
+      setError('Your account has been rejected. Contact support.');
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,8 +97,19 @@ export default function LoginPage() {
           <p className="text-center text-xs text-gray-400 mt-6">
             Admin access only. Unauthorized access is prohibited.
           </p>
+          <p className="text-center mt-3">
+            <a href="/" className="text-xs text-gray-400 hover:text-[#2E7D32] hover:underline">← Back to home</a>
+          </p>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-surface"><div className="w-8 h-8 border-4 border-[#2E7D32] border-t-transparent rounded-full animate-spin" /></div>}>
+      <LoginInner />
+    </Suspense>
   );
 }
