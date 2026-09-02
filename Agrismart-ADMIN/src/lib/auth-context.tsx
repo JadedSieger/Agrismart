@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await setDoc(doc(db, 'users', user.uid), {
       email,
       fullName,
-      role: 'pending',
+      role: 'admin',
       createdAt: new Date(),
     });
   };
